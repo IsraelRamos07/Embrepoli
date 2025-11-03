@@ -125,6 +125,15 @@
   </style>
 </head>
 <body>
+  <script>
+// Bloqueia acesso se não estiver logado
+const logado = localStorage.getItem("usuarioLogado");
+if (!logado || logado !== "true") {
+  alert("⚠️ Você precisa fazer login para acessar o sistema.");
+  window.location.href = "login.html";
+}
+</script>
+
  <header>
   <div class="logo">
     <a href="index.html" style="text-decoration: none; color: white;">
