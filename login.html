@@ -12,160 +12,42 @@
       --white: #ffffff;
       --btn-blue: #1d4ed8;
     }
-    body {
-      font-family: 'Segoe UI', Roboto, sans-serif;
-      background: var(--light-gray);
-      margin: 0;
-      color: #111827;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    header {
-      background: #000;
-      color: var(--white);
-      padding: 14px 6%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    header a {
-      color: var(--white);
-      text-decoration: none;
-      margin-left: 20px;
-      font-weight: 500;
-    }
-    main {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px;
-    }
-    .login-box {
-      background: var(--white);
-      padding: 40px 50px;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      width: 100%;
-      max-width: 420px;
-      text-align: center;
-    }
-    .login-box h1 {
-      color: var(--blue);
-      margin-bottom: 25px;
-      font-size: 1.6rem;
-    }
-    label {
-      display: block;
-      text-align: left;
-      margin-top: 15px;
-      font-weight: 500;
-      color: var(--gray);
-    }
-    input {
-      width: 100%;
-      padding: 12px;
-      margin-top: 6px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 15px;
-    }
-    button {
-      width: 100%;
-      background: var(--btn-blue);
-      color: var(--white);
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      margin-top: 25px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    button:hover {
-      background: #1e40af;
-    }
-    .links {
-      margin-top: 20px;
-      font-size: 0.9rem;
-    }
-    .links a {
-      color: var(--blue);
-      text-decoration: none;
-    }
-    .links a:hover {
-      text-decoration: underline;
-    }
-    footer {
-      text-align: center;
-      padding: 30px 0;
-      color: var(--gray);
-      font-size: 14px;
-    }
+    body {font-family:'Segoe UI',Roboto,sans-serif;background:var(--light-gray);margin:0;color:#111827;}
+    header {background:#000;color:var(--white);padding:14px 6%;display:flex;justify-content:space-between;align-items:center;}
+    header a {color:var(--white);text-decoration:none;margin-left:20px;font-weight:500;}
+    main {max-width:400px;margin:80px auto;background:var(--white);border-radius:12px;padding:40px;box-shadow:0 2px 8px rgba(0,0,0,0.08);}
+    h1 {color:var(--blue);text-align:center;margin-bottom:20px;}
+    label {display:block;margin-top:15px;font-weight:500;color:var(--gray);}
+    input {width:100%;padding:10px;margin-top:6px;border-radius:8px;border:1px solid #ccc;font-size:15px;}
+    button {background:var(--btn-blue);color:var(--white);padding:12px 26px;border:none;border-radius:8px;margin-top:25px;width:100%;font-weight:600;cursor:pointer;}
+    button:hover {background:#1e40af;}
+    footer {text-align:center;padding:30px 0;color:var(--gray);font-size:14px;}
   </style>
 </head>
 <body>
   <header>
-  <div class="logo">
-    <a href="index.html" style="text-decoration: none; color: white;">
-      <strong>EmbrepoliServices</strong>
-    </a>
-  </div>
-  <nav id="menu"></nav>
-</header>
-
-<script>
-  function atualizarMenu() {
-    const menu = document.getElementById('menu');
-    const logado = localStorage.getItem("usuarioLogado");
-    const nome = localStorage.getItem("nomeUsuario") || "Usuário";
-
-    if (logado) {
-      menu.innerHTML = `
-        <a href="index.html">Início</a>
-        <a href="perfil.html">Meu Perfil</a>
-        <a href="minhas-oficinas.html">Minhas Oficinas</a>
-        <a href="#" onclick="sair()">Sair (${nome})</a>
-      `;
-    } else {
-      menu.innerHTML = `
-        <a href="index.html">Início</a>
-        <a href="login.html">Entrar</a>
-        <a href="cadastro.html">Cadastrar</a>
-      `;
-    }
-  }
-
-  function sair() {
-    localStorage.removeItem("usuarioLogado");
-    localStorage.removeItem("nomeUsuario");
-    window.location.href = "index.html";
-  }
-
-  atualizarMenu();
-</script>
-
-
+    <div class="logo">
+      <a href="index.html" style="text-decoration:none;color:white;"><strong>EmbrepoliServices</strong></a>
+    </div>
+  </header>
 
   <main>
-    <div class="login-box">
-      <h1>Entrar</h1>
-      <form>
-        <label for="usuario">E-mail ou CPF</label>
-        <input type="text" id="usuario" name="usuario" placeholder="Digite seu e-mail ou CPF" required>
+    <h1>Login</h1>
+    <form onsubmit="fazerLogin(event)">
+      <label for="email">E-mail</label>
+      <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
 
-        <label for="senha">Senha</label>
-        <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+      <label for="senha">Senha</label>
+      <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
 
-        <button type="submit">Acessar</button>
+      <button type="submit">Entrar</button>
 
-        <div class="links">
-          <p><a href="recuperar.html">Esqueci minha senha</a></p>
-          <p>Não tem uma conta? <a href="cadastro.html">Cadastre-se</a></p>
-        </div>
-      </form>
-    </div>
+      <p id="msg" style="text-align:center;margin-top:10px;font-weight:600;"></p>
+
+      <p style="text-align:center;margin-top:15px;">
+        <a href="recuperar.html" style="color:#1e3a8a;text-decoration:none;font-weight:600;">Esqueci minha senha</a>
+      </p>
+    </form>
   </main>
 
   <footer>
@@ -173,7 +55,33 @@
   </footer>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+  function fazerLogin(e) {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+    const senha = document.getElementById("senha").value.trim();
+    const msg = document.getElementById("msg");
+
+    if (!email || !senha) {
+      msg.style.color = "red";
+      msg.innerText = "Preencha todos os campos!";
+      return;
+    }
+
+    // Login simulado
+    if (email === "admin@embrepoli.com" && senha === "1234") {
+      msg.style.color = "green";
+      msg.innerText = "✅ Login realizado com sucesso!";
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 1500);
+    } else {
+      msg.style.color = "red";
+      msg.innerText = "❌ E-mail ou senha incorretos.";
+    }
+  }
+
+  document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
