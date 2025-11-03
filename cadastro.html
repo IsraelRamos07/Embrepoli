@@ -298,30 +298,41 @@
   }
 
   // ==========================
-  // Envio e Mensagem de sucesso
-  // ==========================
-  document.querySelectorAll('form').forEach(form => {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
+// Cadastro com salvamento local
+// ==========================
+document.querySelectorAll('form').forEach(form => {
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
 
-      const cpfValido = cpfInput ? cpfInput.value.replace(/\D/g, '').length === 11 : true;
-      const cnpjValido = cnpjInput ? cnpjInput.value.replace(/\D/g, '').length === 14 : true;
+    const cpfValido = cpfInput ? cpfInput.value.replace(/\D/g, '').length === 11 : true;
+    const cnpjValido = cnpjInput ? cnpjInput.value.replace(/\D/g, '').length === 14 : true;
 
-      if ((form.id === 'cliente' && !cpfValido) || (form.id === 'mecanico' && !cnpjValido)) {
-        alert('❌ CPF ou CNPJ inválido. Verifique os dígitos.');
-        return;
-      }
+    if ((form.id === 'cliente' && !cpfValido) || (form.id === 'mecanico' && !cnpjValido)) {
+      alert('❌ CPF ou CNPJ inválido. Verifique os dígitos.');
+      return;
+    }
 
-      form.style.display = 'none';
-      const msg = document.createElement('div');
-      msg.innerHTML = `
-        <div style="text-align:center;color:green;font-weight:600;margin-top:20px;font-size:16px;">
-          ✅ Cadastro realizado com sucesso!<br>
-          Bem-vindo à Rede Embrepoli Services.
-        </div>`;
-      form.parentNode.appendChild(msg);
-    });
+    // Salva o cadastro do cliente localmente (para login funcionar)
+    if (form.id === 'cliente') {
+      const nome = document.getElementById('nome').value;
+      const email = document.getElementById('email').value;
+      const senha = document.getElementById('senha').value;
+
+      const usuario = { nome, email, senha };
+      localStorage.setItem('usuarioCadastrado', JSON.stringify(usuario));
+    }
+
+    form.style.display = 'none';
+    const msg = document.createElement('div');
+    msg.innerHTML = `
+      <div style="text-align:center;color:green;font-weight:600;margin-top:20px;font-size:16px;">
+        ✅ Cadastro realizado com sucesso!<br>
+        Agora você já pode fazer login.
+      </div>`;
+    form.parentNode.appendChild(msg);
   });
+});
+
 </script>
 
 
