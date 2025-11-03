@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buscar Mecânicos – EmbrepoliServices</title>
+  <style>
+    :root {
+      --blue: #1e3a8a;
+      --gray: #6b7280;
+      --light-gray: #f3f4f6;
+      --white: #ffffff;
+      --btn-blue: #1d4ed8;
+      --green: #16a34a;
+    }
+    body {
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      background: var(--light-gray);
+      margin: 0;
+      color: #111827;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: #000;
+      color: var(--white);
+      padding: 14px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header a {
+      color: var(--white);
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: 500;
+    }
+    main {
+      flex: 1;
+      max-width: 1100px;
+      margin: 40px auto;
+      background: var(--white);
+      border-radius: 12px;
+      padding: 30px 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: var(--blue);
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .filtros {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    select, input {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+      width: 100%;
+    }
+    button {
+      background: var(--btn-blue);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover { background: #1e40af; }
+    .lista {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      text-align: center;
+      color: var(--gray);
+    }
+    .placeholder {
+      background: var(--light-gray);
+      padding: 40px;
+      border-radius: 12px;
+      border: 1px dashed #ccc;
+      font-style: italic;
+    }
+    .card {
+      background: var(--light-gray);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .card h2 { color: var(--blue); margin-bottom: 6px; }
+    .card p { margin: 4px 0; color: var(--gray); font-size: 0.95rem; }
+    .whatsapp-btn {
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      margin-top: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+    .whatsapp-btn:hover { background: #15803d; }
+    footer {
+      text-align: center;
+      padding: 25px 0;
+      color: var(--gray);
+      font-size: 14px;
+      background: #fff;
+      border-top: 1px solid #e5e7eb;
+    }
+  </style>
+</head>
+<body>
+ <header>
+  <div class="logo">
+    <a href="index.html" style="text-decoration: none; color: white;">
+      <strong>EmbrepoliServices</strong>
+    </a>
+  </div>
+  <nav id="menu"></nav>
+</header>
+
+<script>
+  function atualizarMenu() {
+    const menu = document.getElementById('menu');
+    const logado = localStorage.getItem("usuarioLogado");
+    const nome = localStorage.getItem("nomeUsuario") || "Usuário";
+
+    if (logado) {
+      menu.innerHTML = `
+        <a href="index.html">Início</a>
+        <a href="perfil.html">Meu Perfil</a>
+        <a href="minhas-oficinas.html">Minhas Oficinas</a>
+        <a href="#" onclick="sair()">Sair (${nome})</a>
+      `;
+    } else {
+      menu.innerHTML = `
+        <a href="index.html">Início</a>
+        <a href="login.html">Entrar</a>
+        <a href="cadastro.html">Cadastrar</a>
+      `;
+    }
+  }
+
+  function sair() {
+    localStorage.removeItem("usuarioLogado");
+    localStorage.removeItem("nomeUsuario");
+    window.location.href = "index.html";
+  }
+
+  atualizarMenu();
+</script>
+
+
+
+  <main>
+    <h1>Buscar Mecânicos e Oficinas Parceiras</h1>
+
+    <div class="filtros">
+      <select id="estado" onchange="carregarCidades()">
+        <option value="">Selecione o Estado</option>
+      </select>
+
+      <select id="cidade">
+        <option value="">Selecione a Cidade</option>
+      </select>
+
+     <select id="servico">
+  <option value="">Tipo de Serviço</option>
+  <option>Instalação de Kits Turbo Agrícola</option>
+  <option>Instalação de Kits Turbo Veicular Diesel</option>
+  <option>Instalação e Preparação Offroad</option>
+  <option>Serviços de Bomba Injetora</option>
+  <option>Recuperação / Troca de Turbos</option>
+  <option>Serviços Gerais de Motor</option>
+</select>
+
+
+      <button onclick="buscar()">🔍 Buscar</button>
+    </div>
+
+    <div class="lista" id="lista">
+      <div class="placeholder">
+        Selecione estado, cidade e tipo de serviço para iniciar a busca.
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> Embrepoli. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    async function carregarEstados() {
+      const res = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome');
+      const estados = await res.json();
+      const select = document.getElementById('estado');
+      estados.forEach(e => {
+        const opt = document.createElement('option');
+        opt.value = e.id + "|" + e.sigla;
+        opt.textContent = e.nome + " (" + e.sigla + ")";
+        select.appendChild(opt);
+      });
+    }
+
+    async function carregarCidades() {
+      const estadoSel = document.getElementById('estado').value;
+      const cidadeSel = document.getElementById('cidade');
+      cidadeSel.innerHTML = '<option value="">Carregando...</option>';
+      if (!estadoSel) {
+        cidadeSel.innerHTML = '<option value="">Selecione o Estado</option>';
+        return;
+      }
+      const [id, sigla] = estadoSel.split('|');
+      const res = await fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${id}/municipios?orderBy=nome`);
+      const cidades = await res.json();
+      cidadeSel.innerHTML = '<option value="">Selecione a Cidade</option>';
+      cidades.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.nome;
+        opt.textContent = c.nome;
+        cidadeSel.appendChild(opt);
+      });
+    }
+
+    function buscar() {
+      const cidade = document.getElementById('cidade').value;
+      const servico = document.getElementById('servico').value;
+      const lista = document.getElementById('lista');
+
+      lista.innerHTML = '';
+
+      if (!cidade || !servico) {
+        lista.innerHTML = `<div class='placeholder'>Selecione cidade e tipo de serviço para continuar.</div>`;
+        return;
+      }
+
+      // Simulação de oficinas cadastradas (em breve vem do banco)
+      const oficinas = [
+        { nome: "Oficina TurboSul", cidade: cidade, servico: servico, whatsapp: "5541998765432" },
+        { nome: "Diesel Master Garage", cidade: cidade, servico: servico, whatsapp: "5541987654321" },
+        { nome: "Mecânica Potência Diesel", cidade: cidade, servico: servico, whatsapp: "5541991234567" },
+        { nome: "Oficina AutoTorque", cidade: cidade, servico: servico, whatsapp: "5541998760000" },
+        { nome: "TopDiesel Performance", cidade: cidade, servico: servico, whatsapp: "5541995555555" }
+      ];
+
+      oficinas.slice(0,5).forEach(o => {
+        const msg = encodeURIComponent(`Olá, vi seu perfil na EmbrepoliServices e gostaria de saber mais sobre ${o.servico}.`);
+        const linkWpp = `https://wa.me/${o.whatsapp}?text=${msg}`;
+
+        lista.innerHTML += `
+          <div class="card">
+            <h2>${o.nome}</h2>
+            <p><strong>Cidade:</strong> ${o.cidade}</p>
+            <p><strong>Serviço:</strong> ${o.servico}</p>
+            <a class="whatsapp-btn" href="${linkWpp}" target="_blank">
+              💬 Falar no WhatsApp
+            </a>
+          </div>
+        `;
+      });
+    }
+
+    carregarEstados();
+  </script>
+</body>
+</html>

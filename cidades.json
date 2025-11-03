@@ -1,0 +1,136 @@
+{
+  "AC": [
+    "Rio Branco",
+    "Cruzeiro do Sul",
+    "Sena Madureira"
+  ],
+  "AL": [
+    "Maceió",
+    "Arapiraca",
+    "Penedo"
+  ],
+  "AM": [
+    "Manaus",
+    "Itacoatiara",
+    "Parintins"
+  ],
+  "AP": [
+    "Macapá",
+    "Santana",
+    "Laranjal do Jari"
+  ],
+  "BA": [
+    "Salvador",
+    "Feira de Santana",
+    "Vitória da Conquista"
+  ],
+  "CE": [
+    "Fortaleza",
+    "Sobral",
+    "Juazeiro do Norte"
+  ],
+  "DF": [
+    "Brasília"
+  ],
+  "ES": [
+    "Vitória",
+    "Vila Velha",
+    "Colatina"
+  ],
+  "GO": [
+    "Goiânia",
+    "Anápolis",
+    "Rio Verde"
+  ],
+  "MA": [
+    "São Luís",
+    "Imperatriz",
+    "Caxias"
+  ],
+  "MG": [
+    "Belo Horizonte",
+    "Uberlândia",
+    "Juiz de Fora"
+  ],
+  "MS": [
+    "Campo Grande",
+    "Dourados",
+    "Três Lagoas"
+  ],
+  "MT": [
+    "Cuiabá",
+    "Rondonópolis",
+    "Sinop"
+  ],
+  "PA": [
+    "Belém",
+    "Ananindeua",
+    "Santarém"
+  ],
+  "PB": [
+    "João Pessoa",
+    "Campina Grande",
+    "Patos"
+  ],
+  "PE": [
+    "Recife",
+    "Caruaru",
+    "Petrolina"
+  ],
+  "PI": [
+    "Teresina",
+    "Parnaíba",
+    "Picos"
+  ],
+  "PR": [
+    "Curitiba",
+    "Londrina",
+    "Maringá",
+    "Guarapuava",
+    "Cascavel"
+  ],
+  "RJ": [
+    "Rio de Janeiro",
+    "Niterói",
+    "Campos dos Goytacazes"
+  ],
+  "RN": [
+    "Natal",
+    "Mossoró",
+    "Caicó"
+  ],
+  "RO": [
+    "Porto Velho",
+    "Ji-Paraná",
+    "Ariquemes"
+  ],
+  "RR": [
+    "Boa Vista"
+  ],
+  "RS": [
+    "Porto Alegre",
+    "Caxias do Sul",
+    "Pelotas"
+  ],
+  "SC": [
+    "Florianópolis",
+    "Joinville",
+    "Blumenau"
+  ],
+  "SE": [
+    "Aracaju",
+    "Itabaiana",
+    "Lagarto"
+  ],
+  "SP": [
+    "São Paulo",
+    "Campinas",
+    "Santos",
+    "Sorocaba"
+  ],
+  "TO": [
+    "Palmas",
+    "Araguaína",
+    "Gurupi"
+  ]
+}

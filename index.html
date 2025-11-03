@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EmbrepoliServices – Rede de Mecânicos Parceiros</title>
+  <style>
+    :root {
+      --blue: #1e3a8a;
+      --gray: #6b7280;
+      --light-gray: #f3f4f6;
+      --white: #ffffff;
+      --btn-blue: #1d4ed8;
+    }
+    * {box-sizing: border-box; margin: 0; padding: 0;}
+    body {font-family: 'Segoe UI', Roboto, sans-serif; background: var(--light-gray); color: #111827;}
+
+    header {
+      background: #000;
+      color: var(--white);
+      padding: 14px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header img {height: 40px;}
+    header nav a {
+      color: var(--white);
+      margin-left: 24px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 15px;
+    }
+    header nav a:hover {text-decoration: underline;}
+
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 80px 6%;
+      background: var(--white);
+      border-radius: 12px;
+      margin: 40px auto;
+      max-width: 1100px;
+    }
+    .hero-text {
+      flex: 1 1 400px;
+    }
+    .hero-text h1 {
+      font-size: 1.8rem;
+      color: var(--blue);
+      margin-bottom: 12px;
+    }
+    .hero-text p {
+      color: var(--gray);
+      margin-bottom: 20px;
+      font-size: 1rem;
+    }
+    .hero-text a {
+      display: inline-block;
+      background: var(--btn-blue);
+      color: var(--white);
+      padding: 12px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    .hero-text a:hover {background: #1e40af;}
+
+    .hero-img {
+      flex: 1 1 280px;
+      text-align: center;
+    }
+    .hero-img img {max-width: 300px;}
+
+    footer {
+      text-align: center;
+      padding: 30px 0;
+      color: var(--gray);
+      font-size: 14px;
+    }
+    footer a {color: var(--blue); text-decoration: none;}
+    footer a:hover {text-decoration: underline;}
+
+    @media (max-width: 768px) {
+      .hero {flex-direction: column-reverse; text-align: center;}
+      .hero-text a {width: 100%;}
+      .hero-img img {max-width: 220px;}
+    }
+  </style>
+</head>
+<body>
+ <header>
+  <div class="logo">
+    <a href="index.html" style="text-decoration: none; color: white;">
+      <strong>EmbrepoliServices</strong>
+    </a>
+  </div>
+  <nav id="menu"></nav>
+</header>
+
+<script>
+  function atualizarMenu() {
+    const menu = document.getElementById('menu');
+    const logado = localStorage.getItem("usuarioLogado");
+    const nome = localStorage.getItem("nomeUsuario") || "Usuário";
+
+    if (logado) {
+      menu.innerHTML = `
+        <a href="index.html">Início</a>
+        <a href="perfil.html">Meu Perfil</a>
+        <a href="minhas-oficinas.html">Minhas Oficinas</a>
+        <a href="#" onclick="sair()">Sair (${nome})</a>
+      `;
+    } else {
+      menu.innerHTML = `
+        <a href="index.html">Início</a>
+        <a href="login.html">Entrar</a>
+        <a href="cadastro.html">Cadastrar</a>
+      `;
+    }
+  }
+
+  function sair() {
+    localStorage.removeItem("usuarioLogado");
+    localStorage.removeItem("nomeUsuario");
+    window.location.href = "index.html";
+  }
+
+  atualizarMenu();
+</script>
+
+
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Busque um mecânico ou Oficina parceira Embrepoli próxima à sua região!</h1>
+      <p>Faça seu cadastro e conheça a rede de parceiros especializados da Embrepoli!</p>
+      <a href="cadastro.html">Cadastrar-se</a>
+    </div>
+    <div class="hero-img">
+      <img src="imagens/mecanico.png" alt="Mecânico parceiro Embrepoli">
+    </div>
+  </section>
+
+  <footer>
+    <p>© <span id="year"></span> Embrepoli. Todos os direitos reservados. | <a href="contato.html">Contato</a></p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

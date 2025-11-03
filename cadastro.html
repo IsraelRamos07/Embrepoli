@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro – EmbrepoliServices</title>
+  <style>
+    :root {
+      --blue: #1e3a8a;
+      --gray: #6b7280;
+      --light-gray: #f3f4f6;
+      --white: #ffffff;
+      --btn-blue: #1d4ed8;
+    }
+    body {font-family: 'Segoe UI', Roboto, sans-serif; background: var(--light-gray); margin: 0; color: #111827;}
+    header {background: #000; color: var(--white); padding: 14px 6%; display: flex; justify-content: space-between; align-items: center;}
+    header a {color: var(--white); text-decoration: none; margin-left: 20px; font-weight: 500;}
+    main {max-width: 900px; margin: 50px auto; background: var(--white); border-radius: 12px; padding: 40px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);}
+    h1 {color: var(--blue); text-align: center; margin-bottom: 20px;}
+    .tabs {display: flex; justify-content: center; margin-bottom: 20px;}
+    .tab {padding: 10px 20px; border-radius: 6px 6px 0 0; background: var(--light-gray); cursor: pointer; margin: 0 4px; font-weight: 600; color: var(--gray);}
+    .tab.active {background: var(--blue); color: var(--white);}
+    form {display: none;}
+    form.active {display: block;}
+    label {display: block; margin-top: 15px; font-weight: 500; color: var(--gray);}
+    input, select {width: 100%; padding: 10px; margin-top: 6px; border-radius: 8px; border: 1px solid #ccc; font-size: 15px;}
+
+    .checkbox-section {margin-top: 25px;}
+    .checkbox-section h2 {font-size: 1.1rem; color: var(--blue); font-weight: 700; margin-bottom: 12px;}
+    .checkboxes {display: flex; flex-direction: column; gap: 10px; background: var(--light-gray); padding: 20px; border-radius: 10px; border: 1px solid #e5e7eb;}
+    .checkboxes label {display: flex; align-items: center; gap: 10px; font-weight: 500; color: #1e3a8a;}
+    .checkboxes input[type="checkbox"] {width: 18px; height: 18px;}
+
+    button {background: var(--btn-blue); color: var(--white); padding: 12px 26px; border: none; border-radius: 8px; margin-top: 25px; font-weight: 600; cursor: pointer;}
+    button:hover {background: #1e40af;}
+    footer {text-align: center; padding: 30px 0; color: var(--gray); font-size: 14px;}
+  </style>
+</head>
+<body>
+  <header>
+  <div class="logo">
+    <a href="index.html" style="text-decoration: none; color: white;">
+      <strong>EmbrepoliServices</strong>
+    </a>
+  </div>
+  <nav id="menu"></nav>
+</header>
+
+<script>
+  function atualizarMenu() {
+    const menu = document.getElementById('menu');
+    const logado = localStorage.getItem("usuarioLogado");
+    const nome = localStorage.getItem("nomeUsuario") || "Usuário";
+
+    if (logado) {
+      menu.innerHTML = `
+        <a href="index.html">Início</a>
+        <a href="perfil.html">Meu Perfil</a>
+        <a href="minhas-oficinas.html">Minhas Oficinas</a>
+        <a href="#" onclick="sair()">Sair (${nome})</a>
+      `;
+    } else {
+      menu.innerHTML = `
+        <a href="index.html">Início</a>
+        <a href="login.html">Entrar</a>
+        <a href="cadastro.html">Cadastrar</a>
+      `;
+    }
+  }
+
+  function sair() {
+    localStorage.removeItem("usuarioLogado");
+    localStorage.removeItem("nomeUsuario");
+    window.location.href = "index.html";
+  }
+
+  atualizarMenu();
+</script>
+
+
+
+  <main>
+    <h1>Cadastro</h1>
+    <div class="tabs">
+      <div class="tab active" data-tab="cliente">Cliente</div>
+      <div class="tab" data-tab="mecanico">Mecânico / Oficina</div>
+    </div>
+
+    <!-- Formulário Cliente -->
+    <form id="cliente" class="active">
+      <label for="nome">Nome completo</label>
+      <input type="text" id="nome" name="nome" required>
+
+      <label for="cpf">CPF</label>
+      <input type="text" id="cpf" name="cpf" required>
+
+     
+      <label for="estado_m">Estado</label>
+<select id="estado_m" name="estado_m" required onchange="carregarCidadesM()">
+  <option value="">Selecione o Estado</option>
+</select>
+
+<label for="cidade_m">Cidade</label>
+<select id="cidade_m" name="cidade_m" required>
+  <option value="">Selecione a Cidade</option>
+</select>
+
+
+<label for="whatsapp_m">WhatsApp</label>
+<div style="display:flex; align-items:center; gap:6px;">
+  <span style="background:#e5e7eb; padding:10px 14px; border-radius:8px; font-weight:600; color:#1e3a8a;">+55</span>
+  <input type="text" id="whatsapp_m" name="whatsapp_m" placeholder="(DDD) 99999-9999" required style="flex:1;">
+</div>
+
+
+      <button type="submit">Cadastrar Cliente</button>
+    </form>
+
+    <!-- Formulário Mecânico -->
+    <form id="mecanico">
+      <label for="oficina">Nome da Oficina</label>
+      <input type="text" id="oficina" name="oficina" required>
+
+      <label for="cnpj">CNPJ</label>
+      <input type="text" id="cnpj" name="cnpj" required>
+
+      <label for="cep_m">CEP</label>
+      <input type="text" id="cep_m" name="cep_m" required>
+
+      <label for="cidade_m">Cidade</label>
+      <input type="text" id="cidade_m" name="cidade_m" required>
+
+      <label for="estado_m">Estado</label>
+      <input type="text" id="estado_m" name="estado_m" required>
+
+      <label for="endereco_m">Endereço (Rua, nº, complemento)</label>
+      <input type="text" id="endereco_m" name="endereco_m" required>
+
+      <label for="whatsapp_m">WhatsApp</label>
+      <input type="text" id="whatsapp_m" name="whatsapp_m" required>
+
+      <label for="insta">Instagram (opcional)</label>
+      <input type="text" id="insta" name="insta">
+
+      <div class="checkbox-section">
+  <h2>Selecione todos os serviços que sua oficina realiza:</h2>
+  <div class="checkboxes">
+    <label><input type="checkbox" name="servicos" value="Instalação de Kits Turbo Agrícola"> Instalação de Kits Turbo Agrícola</label>
+    <label><input type="checkbox" name="servicos" value="Instalação de Kits Turbo Veicular Diesel"> Instalação de Kits Turbo Veicular Diesel</label>
+    <label><input type="checkbox" name="servicos" value="Instalação e Preparação Offroad"> Instalação e Preparação Offroad</label>
+    <label><input type="checkbox" name="servicos" value="Serviços de Bomba Injetora"> Serviços de Bomba Injetora</label>
+    <label><input type="checkbox" name="servicos" value="Recuperação / Troca de Turbos"> Recuperação / Troca de Turbos</label>
+    <label><input type="checkbox" name="servicos" value="Serviços Gerais de Motor"> Serviços Gerais de Motor</label>
+  </div>
+</div>
+
+      </div>
+
+      <button type="submit">Cadastrar Mecânico</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> Embrepoli. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+  // ==========================
+  // Abas Cliente / Mecânico
+  // ==========================
+  const tabs = document.querySelectorAll('.tab');
+  const forms = document.querySelectorAll('form');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      forms.forEach(f => f.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Pega referências (se existirem no HTML)
+  const selEstadoCliente = document.getElementById('estado');
+  const selCidadeCliente = document.getElementById('cidade');
+  const selEstadoMec = document.getElementById('estado_m');
+  const selCidadeMec = document.getElementById('cidade_m');
+
+  // ==========================
+  // IBGE – Estados e Cidades
+  // ==========================
+  async function carregarEstados() {
+    try {
+      const res = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome');
+      const estados = await res.json();
+
+      // Preenche estados do Cliente (value = ID numérico!)
+      if (selEstadoCliente) {
+        estados.forEach(e => {
+          const opt = document.createElement('option');
+          opt.value = e.id;                // ← ID numérico exigido pela API de municípios
+          opt.textContent = `${e.nome} (${e.sigla})`;
+          opt.dataset.sigla = e.sigla;     // opcional: guarda sigla se quiser usar depois
+          selEstadoCliente.appendChild(opt);
+        });
+        // listeners
+        selEstadoCliente.addEventListener('change', () => carregarCidades('cliente'));
+      }
+
+      // Preenche estados do Mecânico (value = ID numérico!)
+      if (selEstadoMec) {
+        estados.forEach(e => {
+          const opt = document.createElement('option');
+          opt.value = e.id;                // ← ID numérico
+          opt.textContent = `${e.nome} (${e.sigla})`;
+          opt.dataset.sigla = e.sigla;
+          selEstadoMec.appendChild(opt);
+        });
+        // listeners
+        selEstadoMec.addEventListener('change', () => carregarCidades('mecanico'));
+      }
+
+      // Desabilita cidade até escolher estado
+      if (selCidadeCliente) selCidadeCliente.disabled = true;
+      if (selCidadeMec) selCidadeMec.disabled = true;
+
+    } catch (err) {
+      console.error('Erro ao carregar estados:', err);
+    }
+  }
+
+  async function carregarCidades(tipo) {
+    const estadoSelect = tipo === 'cliente' ? selEstadoCliente : selEstadoMec;
+    const cidadeSelect = tipo === 'cliente' ? selCidadeCliente : selCidadeMec;
+    if (!estadoSelect || !cidadeSelect) return;
+
+    const estadoID = estadoSelect.value; // agora é ID numérico
+    cidadeSelect.innerHTML = '<option value="">Carregando...</option>';
+    cidadeSelect.disabled = true;
+
+    if (!estadoID) {
+      cidadeSelect.innerHTML = '<option value="">Selecione o Estado</option>';
+      return;
+    }
+
+    try {
+      const res = await fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoID}/municipios?orderBy=nome`);
+      const cidades = await res.json();
+
+      cidadeSelect.innerHTML = '<option value="">Selecione a Cidade</option>';
+      cidades.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.nome;
+        opt.textContent = c.nome;
+        cidadeSelect.appendChild(opt);
+      });
+      cidadeSelect.disabled = false;
+    } catch (err) {
+      console.error('Erro ao carregar cidades:', err);
+      cidadeSelect.innerHTML = '<option value="">Erro ao carregar cidades</option>';
+    }
+  }
+
+  carregarEstados();
+
+  // ==========================
+  // Máscara CPF / CNPJ
+  // ==========================
+  const cpfInput = document.getElementById('cpf');
+  const cnpjInput = document.getElementById('cnpj');
+
+  if (cpfInput) {
+    cpfInput.addEventListener('input', () => {
+      let v = cpfInput.value.replace(/\D/g, '').slice(0, 11);
+      v = v.replace(/(\d{3})(\d)/, '$1.$2');
+      v = v.replace(/(\d{3})(\d)/, '$1.$2');
+      v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+      cpfInput.value = v;
+    });
+  }
+
+  if (cnpjInput) {
+    cnpjInput.addEventListener('input', () => {
+      let v = cnpjInput.value.replace(/\D/g, '').slice(0, 14);
+      v = v.replace(/^(\d{2})(\d)/, '$1.$2');
+      v = v.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+      v = v.replace(/\.(\d{3})(\d)/, '.$1/$2');
+      v = v.replace(/(\d{4})(\d)/, '$1-$2');
+      cnpjInput.value = v;
+    });
+  }
+
+  // ==========================
+  // Envio e Mensagem de sucesso
+  // ==========================
+  document.querySelectorAll('form').forEach(form => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const cpfValido = cpfInput ? cpfInput.value.replace(/\D/g, '').length === 11 : true;
+      const cnpjValido = cnpjInput ? cnpjInput.value.replace(/\D/g, '').length === 14 : true;
+
+      if ((form.id === 'cliente' && !cpfValido) || (form.id === 'mecanico' && !cnpjValido)) {
+        alert('❌ CPF ou CNPJ inválido. Verifique os dígitos.');
+        return;
+      }
+
+      form.style.display = 'none';
+      const msg = document.createElement('div');
+      msg.innerHTML = `
+        <div style="text-align:center;color:green;font-weight:600;margin-top:20px;font-size:16px;">
+          ✅ Cadastro realizado com sucesso!<br>
+          Bem-vindo à Rede Embrepoli Services.
+        </div>`;
+      form.parentNode.appendChild(msg);
+    });
+  });
+</script>
+
+
+</body>
+</html>
